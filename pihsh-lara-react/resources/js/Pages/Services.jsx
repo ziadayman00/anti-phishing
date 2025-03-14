@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import { Link } from "@inertiajs/react";
+import { memo } from "react"; // Import memo for memoization
 
-function Services() {
+// Memoize the Services component to prevent unnecessary re-renders
+const Services = memo(() => {
     const servicesData = [
         {
             id: 1,
@@ -47,45 +49,48 @@ function Services() {
         },
     ];
 
+    // Optimized scrolling animation (lighter and faster)
     const cardVariants = {
-        offscreen: { y: 80, opacity: 0, rotateX: 10 },
+        offscreen: { y: 50, opacity: 0 }, // Simplified initial state
         onscreen: {
             y: 0,
             opacity: 1,
-            rotateX: 0,
-            transition: { type: "spring", stiffness: 100, damping: 15, duration: 0.9 }
+            transition: {
+                type: "tween", // Replaced spring with tween for less computation
+                ease: "easeOut",
+                duration: 0.5, // Reduced duration for faster execution
+            }
         }
     };
 
     return (
         <section id="services" className="relative py-24 bg-gradient-to-b from-gray-50 via-cyan-50 to-gray-50 overflow-hidden">
-            {/* Background Effects */}
+            {/* Background Effects - Keep lightweight */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-20 left-20 w-64 h-64 bg-cyan-300/10 rounded-full blur-2xl animate-[orbit_15s_infinite_linear]"></div>
                 <div className="absolute bottom-20 right-20 w-80 h-80 bg-blue-300/10 rounded-full blur-2xl animate-[orbit_20s_infinite_linear_reverse]"></div>
-                <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4gPGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4gPHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgyMDB2MjAwSDB6IiBvcGFjaXR5PSIwLjA1Ii8+IDxwYXRoIGQ9Ik0xMDAgMTAwIG0tNzUsMCBhNzUsNzUgMCAxLDAgMTUwLDAgYTc1LDc1IDAgMSwwIC0xNTAsMCIgc3Ryb2tlPSIjMjJkM2U2IiBzdHJva2Utd2lkdGg9IjAuNSIgc3Ryb2keLWRhc2hhcnJheT0iMSwxIiBvcGFjaXR5PSIwLjEiLz4gPC9nPiA8L3N2Zz4=')] opacity-5"></div>
+                {/* Removed SVG background to reduce DOM complexity */}
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <motion.div
-                    initial={{ opacity: 0, y: 40 }}
+                    initial={{ opacity: 0, y: 20 }} // Reduced y movement for performance
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    transition={{ duration: 0.6, ease: "easeOut" }} // Shortened duration
                     viewport={{ once: true, amount: 0.5 }}
-                    className="text-center mb-20"
+                    className="text-center mb-16" // Reduced margin
                 >
-                    <div className="text-center mb-12">
-                        <h2 className="text-5xl md:text-6xl font-extrabold text-blue-900 relative inline-block">
-                            Our Services
-                            <span className="absolute -bottom-2 left-0 w-full h-1.5 bg-blue-900/30 rounded-full"></span>
-                        </h2>
-                        <p className="mt-6 text-xl md:text-2xl text-blue-900/80 max-w-3xl mx-auto">
-                            Discover our suite of cybersecurity services designed to protect your organization from phishing threats.
-                        </p>
-                    </div>                </motion.div>
+                    <h2 className="text-5xl md:text-6xl font-extrabold text-blue-900 relative inline-block">
+                        Our Services
+                        <span className="absolute -bottom-2 left-0 w-full h-1.5 bg-blue-900/30 rounded-full"></span>
+                    </h2>
+                    <p className="mt-6 text-xl md:text-2xl text-blue-900/80 max-w-3xl mx-auto">
+                        Discover our suite of cybersecurity services designed to protect your organization from phishing threats.
+                    </p>
+                </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    {servicesData.map((service, index) => (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"> {/* Reduced gap */}
+                    {servicesData.map((service) => (
                         <motion.div
                             key={service.id}
                             initial="offscreen"
@@ -93,44 +98,50 @@ function Services() {
                             viewport={{ once: true, amount: 0.3 }}
                             variants={cardVariants}
                             whileHover={{ y: -10, rotate: 1, transition: { duration: 0.3 } }}
-                            className="group relative"
+                            className="group relative will-change-transform" // Hint for GPU acceleration
                         >
-                            {/* Glowing Edge */}
-                            <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400/40 via-blue-500/40 to-cyan-400/40 rounded-3xl blur-lg opacity-0 group-hover:opacity-60 transition-all duration-500"></div>
+                            {/* Simplified Glowing Edge */}
+                            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400/30 to-blue-500/30 rounded-3xl blur-md opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
 
-                            <div className="relative h-full bg-white/95 backdrop-blur-sm rounded-3xl shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden border border-cyan-300/30">
+                            <div className="relative h-full bg-white/95 rounded-3xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-cyan-300/20">
                                 <div className="overflow-hidden relative">
                                     <img
-                                        className="w-full h-60 object-cover transform transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                                        className="w-full h-60 object-cover transition-transform duration-500 group-hover:scale-105" // Simplified hover effect
                                         src={service.image}
                                         alt={service.title}
+                                        loading="lazy" // Lazy-load images
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-gray-800/20 via-transparent to-transparent"></div>
+                                    <div className="absolute inset-0 bg-gradient-to-t from-gray-800/10 to-transparent" />
                                 </div>
 
                                 <div className="p-6">
-                                    <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-cyan-600 transition-colors duration-300 drop-shadow-[0_1px_3px_rgba(34,211,238,0.3)]">
+                                    <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-cyan-600 transition-colors duration-300">
                                         {service.title}
                                     </h3>
-                                    <p className="text-gray-700 mb-5 leading-relaxed text-sm font-light">
+                                    <p className="text-gray-700 mb-5 leading-relaxed text-sm">
                                         {service.description}
                                     </p>
                                     <Link
                                         href={service.link}
-                                        className="inline-flex items-center gap-2 text-cyan-600 font-medium hover:text-cyan-800 transition-colors duration-300 group/link"
+                                        className="relative inline-block px-6 py-3 text-white font-semibold rounded-full overflow-hidden group/link transition-all duration-300"
                                     >
-                                        <span>Engage Now</span>
-                                        <svg
-                                            className="w-5 h-5 transition-transform duration-300 group-hover/link:translate-x-2"
-                                            fill="currentColor"
-                                            viewBox="0 0 20 20"
-                                        >
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                                                clipRule="evenodd"
-                                            />
-                                        </svg>
+                                        {/* Darker Button with Optimized Effects */}
+                                        <span className="absolute inset-0 bg-gradient-to-r from-cyan-700 via-blue-800 to-cyan-700 group-hover/link:from-cyan-800 group-hover/link:via-blue-900 group-hover/link:to-cyan-800 transition-colors duration-300" />
+                                        <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -translate-x-full group-hover/link:translate-x-full transition-transform duration-400" />
+                                        <span className="relative flex items-center justify-center gap-2 z-10">
+                                            Engage Now
+                                            <svg
+                                                className="w-5 h-5 transition-transform duration-300 group-hover/link:translate-x-1"
+                                                fill="currentColor"
+                                                viewBox="0 0 20 20"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                        </span>
                                     </Link>
                                 </div>
                             </div>
@@ -148,6 +159,9 @@ function Services() {
             `}</style>
         </section>
     );
-}
+});
+
+// Add display name for better debugging
+Services.displayName = "Services";
 
 export default Services;
