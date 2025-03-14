@@ -49,8 +49,8 @@ function Services() {
 
     const cardVariants = {
         offscreen: { y: 80, opacity: 0, rotateX: 10 },
-        onscreen: { 
-            y: 0, 
+        onscreen: {
+            y: 0,
             opacity: 1,
             rotateX: 0,
             transition: { type: "spring", stiffness: 100, damping: 15, duration: 0.9 }
@@ -74,14 +74,15 @@ function Services() {
                     viewport={{ once: true, amount: 0.5 }}
                     className="text-center mb-20"
                 >
-                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
-                        <span className="bg-gradient-to-r from-cyan-500 to-blue-600 bg-clip-text text-transparent">
-                            Anti-Phishing Arsenal
-                        </span>
-                    </h2>
-                    <p className="mt-2 text-gray-600 text-lg">Advanced Tools for a Secure Future</p>
-                    <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full mx-auto mt-4 shadow-md shadow-cyan-500/20"></div>
-                </motion.div>
+                    <div className="text-center mb-12">
+                        <h2 className="text-5xl md:text-6xl font-extrabold text-blue-900 relative inline-block">
+                            Our Services
+                            <span className="absolute -bottom-2 left-0 w-full h-1.5 bg-blue-900/30 rounded-full"></span>
+                        </h2>
+                        <p className="mt-6 text-xl md:text-2xl text-blue-900/80 max-w-3xl mx-auto">
+                            Discover our suite of cybersecurity services designed to protect your organization from phishing threats.
+                        </p>
+                    </div>                </motion.div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                     {servicesData.map((service, index) => (
@@ -96,7 +97,7 @@ function Services() {
                         >
                             {/* Glowing Edge */}
                             <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400/40 via-blue-500/40 to-cyan-400/40 rounded-3xl blur-lg opacity-0 group-hover:opacity-60 transition-all duration-500"></div>
-                            
+
                             <div className="relative h-full bg-white/95 backdrop-blur-sm rounded-3xl shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden border border-cyan-300/30">
                                 <div className="overflow-hidden relative">
                                     <img
@@ -106,7 +107,7 @@ function Services() {
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-gray-800/20 via-transparent to-transparent"></div>
                                 </div>
-                                
+
                                 <div className="p-6">
                                     <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-cyan-600 transition-colors duration-300 drop-shadow-[0_1px_3px_rgba(34,211,238,0.3)]">
                                         {service.title}

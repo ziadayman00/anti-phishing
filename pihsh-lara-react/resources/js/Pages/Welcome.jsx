@@ -6,6 +6,10 @@ import AboutUs from '@/Pages/AboutUs';
 import Footer from '@/Components/Footer';
 import ContactUs from '@/Pages/ContactUs';
 import CTA from '@/Components/CTA';
+import PhishingStats from './PhishingStats';
+import WhyMatters from './WhyMatters';
+import LatestPhishingTrends from './LatestPhishingTrends';
+import PhishingAwarenessQuiz from './PhishingAwarenessQuiz';
 
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
     const handleImageError = () => {
@@ -34,8 +38,12 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
             <main>
                 <Services />
                 <AboutUs />
-                <ContactUs />
+                <WhyMatters/>
+                <PhishingStats/>
+                <LatestPhishingTrends/>
+                <PhishingAwarenessQuiz/>
                 <CTA />
+                <ContactUs />
                 <Footer />
 
             </main>
