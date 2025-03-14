@@ -36,7 +36,7 @@ function Services() {
             title: "Phishing Simulation",
             description: "Simulate real-world phishing attacks to train and fortify your team’s defenses.",
             image: "/assets/simulation.jpg",
-            link: "#",
+            link: "simulation",
         },
         {
             id: 6,

@@ -24,25 +24,44 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
-
 Route::get('/services', function () {
     return Inertia::render('Services');
 })->name('service');
+
 Route::get('/about', function () {
     return Inertia::render('AboutUs');
 })->name('about');
+
 Route::get('/contact', function () {
     return Inertia::render('ContactUs');
 })->name('contact');
+
 Route::get('/url-check', function () {
     return Inertia::render('UrlCheck');
 })->name('url.check');
+
 Route::get('/training', function () {
     return Inertia::render('TrainingContent');
 })->name('training');
+
 Route::get('/terms-of-use', function () {
-    return inertia('TermsOfUse');
+    return Inertia::render('TermsOfUse');
 })->name('terms');
+
+// Simulation Routes
+Route::get('/simulation', function () {
+    return Inertia::render('Simulation');
+})->name('simulation');
+
+Route::get('/simulation/email', function () {
+    return Inertia::render('EmailPhishingSimulation');
+})->name('simulation.email');
+
+Route::get('/simulation/results', function () {
+    return Inertia::render('SimulationResult', [
+        'score' => request()->session()->get('simulation_score', 80), // Default to 80 for now
+        'totalSteps' => 5,
+    ]);
+})->name('simulation.results');
 
 require __DIR__.'/auth.php';
