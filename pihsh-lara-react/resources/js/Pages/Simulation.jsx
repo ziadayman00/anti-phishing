@@ -15,9 +15,55 @@ export default function Simulation() {
         hover: { scale: 1.05, transition: { duration: 0.3 } },
     };
 
-    const handleClick = (e) => {
-        console.log('Link clicked! Navigating to /simulation/email');
+    const handleClick = (category) => {
+        console.log(`Link clicked! Navigating to /simulation/${category}`);
     };
+
+    // Simulation Categories Data
+    const simulationCategories = [
+        {
+            title: "Email Phishing Lab",
+            description: "Spot phishing emails in a simulated inbox.",
+            difficulty: "Beginner",
+            time: "~5 mins",
+            path: "/simulation/email",
+        },
+        {
+            title: "SMS Phishing Lab",
+            description: "Detect phishing attempts in text messages.",
+            difficulty: "Beginner",
+            time: "~4 mins",
+            path: "/simulation/sms",
+        },
+        {
+            title: "Voice Phishing Lab",
+            description: "Identify phishing calls from fake support agents.",
+            difficulty: "Intermediate",
+            time: "~6 mins",
+            path: "/simulation/vishing",
+        },
+        {
+            title: "Website Phishing Lab",
+            description: "Identify fake websites designed to steal data.",
+            difficulty: "Intermediate",
+            time: "~7 mins",
+            path: "/simulation/website",
+        },
+        {
+            title: "Social Engineering Lab",
+            description: "Defend against psychological manipulation tactics.",
+            difficulty: "Advanced",
+            time: "~8 mins",
+            path: "/simulation/social",
+        },
+        {
+            title: "Multi-Channel Phishing Lab",
+            description: "Face combined attacks across email, SMS, and calls.",
+            difficulty: "Expert",
+            time: "~10 mins",
+            path: "/simulation/multi-channel",
+        },
+    ];
 
     return (
         <div className="min-h-screen bg-gray-900 text-white">
@@ -77,27 +123,26 @@ export default function Simulation() {
                         </div>
 
                         {/* Simulation Cards */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-                            <Link href="/simulation/email" onClick={handleClick}>
-                                <motion.div
-                                    className="p-6 bg-gray-700/50 rounded-xl border border-cyan-500/20 shadow-lg hover:shadow-cyan-500/30 transition-all duration-300 cursor-pointer"
-                                    variants={cardVariants}
-                                    whileHover="hover"
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+                            {simulationCategories.map((category, index) => (
+                                <Link
+                                    key={index}
+                                    href={category.path}
+                                    onClick={() => handleClick(category.path.split('/')[2])}
                                 >
-                                    <h3 className="text-xl font-semibold text-cyan-300">Email Phishing Lab</h3>
-                                    <p className="mt-2 text-gray-400">Spot phishing emails in a simulated inbox.</p>
-                                    <p className="mt-2 text-sm text-cyan-400">Difficulty: Beginner | ~5 mins</p>
-                                </motion.div>
-                            </Link>
-                            <motion.div
-                                className="p-6 bg-gray-700/50 rounded-xl border border-cyan-500/20 shadow-lg hover:shadow-cyan-500/30 transition-all duration-300"
-                                variants={cardVariants}
-                                whileHover="hover"
-                            >
-                                <h3 className="text-xl font-semibold text-cyan-300">Website Phishing Lab</h3>
-                                <p className="mt-2 text-gray-400">Identify fake websites designed to steal data.</p>
-                                <p className="mt-2 text-sm text-cyan-400">Difficulty: Intermediate | ~7 mins</p>
-                            </motion.div>
+                                    <motion.div
+                                        className="p-6 bg-gray-700/50 rounded-xl border border-cyan-500/20 shadow-lg hover:shadow-cyan-500/30 transition-all duration-300 cursor-pointer"
+                                        variants={cardVariants}
+                                        whileHover="hover"
+                                    >
+                                        <h3 className="text-xl font-semibold text-cyan-300">{category.title}</h3>
+                                        <p className="mt-2 text-gray-400">{category.description}</p>
+                                        <p className="mt-2 text-sm text-cyan-400">
+                                            Difficulty: {category.difficulty} | {category.time}
+                                        </p>
+                                    </motion.div>
+                                </Link>
+                            ))}
                         </div>
 
                         {/* Score Dashboard */}
@@ -115,7 +160,7 @@ export default function Simulation() {
                         <div className="text-center">
                             <Link
                                 href="/simulation/email"
-                                onClick={handleClick}
+                                onClick={() => handleClick('email')}
                                 className="px-8 py-4 bg-gradient-to-r from-cyan-600 to-blue-600 text-white text-lg font-semibold rounded-xl shadow-lg hover:from-cyan-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 transition-all duration-300 inline-block"
                             >
                                 Start Simulation

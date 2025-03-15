@@ -1,9 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-//********** */
 use App\Http\Controllers\ContactController;
-//********** */
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,10 +25,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-//********** */
 Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
-//********** */
 
 Route::get('/services', function () {
     return Inertia::render('Services');
@@ -65,10 +61,30 @@ Route::get('/simulation/email', function () {
     return Inertia::render('EmailPhishingSimulation');
 })->name('simulation.email');
 
+Route::get('/simulation/sms', function () {
+    return Inertia::render('SMSSimulation');
+})->name('simulation.sms');
+
+Route::get('/simulation/vishing', function () {
+    return Inertia::render('VishingSimulation');
+})->name('simulation.vishing');
+
+Route::get('/simulation/website', function () {
+    return Inertia::render('WebsiteSimulation');
+})->name('simulation.website');
+
+Route::get('/simulation/social', function () {
+    return Inertia::render('SocialSimulation');
+})->name('simulation.social');
+
+Route::get('/simulation/multi-channel', function () {
+    return Inertia::render('MultiChannelSimulation');
+})->name('simulation.multi-channel');
+
 Route::get('/simulation/results', function () {
     return Inertia::render('SimulationResult', [
         'score' => request()->session()->get('simulation_score', 80), // Default to 80 for now
-        'totalSteps' => 5,
+        'totalSteps' => 5, // يمكنك تعديلها حسب عدد الخطوات في كل سيميوليشن
     ]);
 })->name('simulation.results');
 

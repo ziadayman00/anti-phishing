@@ -2,10 +2,22 @@ import Navbar from '@/Components/Navbar';
 import { Head, Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 
-export default function SimulationResults({ score = 80, totalSteps = 5 }) {
-    // Calculate results (assuming these props come from the simulation)
+export default function SimulationResults({ simulationType, score, totalSteps }) {
+    // Calculate results based on dynamic props
     const correctAnswers = Math.floor(score / 20); // Each correct answer is 20 points
     const accuracy = Math.round((correctAnswers / totalSteps) * 100);
+
+    // Map simulation type to a readable name
+    const simulationNames = {
+        email: "Email Phishing Lab",
+        sms: "SMS Phishing Lab",
+        vishing: "Voice Phishing Lab",
+        website: "Website Phishing Lab",
+        social: "Social Engineering Lab",
+        'multi-channel': "Multi-Channel Phishing Lab",
+    };
+
+    const displayName = simulationNames[simulationType] || "Unknown Simulation";
 
     // Feedback based on performance
     const getFeedback = () => {
@@ -70,7 +82,7 @@ export default function SimulationResults({ score = 80, totalSteps = 5 }) {
                                     Simulation Results
                                 </h1>
                                 <p className="mt-2 text-lg text-cyan-200 font-mono">
-                                    Email Phishing Lab
+                                    {displayName}
                                 </p>
                             </div>
                         </div>
@@ -105,7 +117,7 @@ export default function SimulationResults({ score = 80, totalSteps = 5 }) {
                             <p className="text-xl text-gray-300">{getFeedback()}</p>
                             {accuracy < 80 && (
                                 <p className="mt-2 text-sm text-cyan-300 font-mono">
-                                    Tip: Look for suspicious domains and urgent language in phishing attempts.
+                                    Tip: Look for suspicious domains, urgent language, or unusual requests in phishing attempts.
                                 </p>
                             )}
                         </div>
@@ -113,7 +125,7 @@ export default function SimulationResults({ score = 80, totalSteps = 5 }) {
                         {/* CTA */}
                         <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
                             <Link
-                                href="/simulation/email"
+                                href={`/simulation/${simulationType}`}
                                 className="px-6 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-semibold rounded-xl shadow-md hover:from-cyan-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 transition-all duration-300"
                             >
                                 Retry Simulation
